@@ -1,0 +1,138 @@
+<head>
+  <title>fbscore</title>
+</head>
+
+<body>
+	<div class="container">
+		<div style="float:left;width:60%">
+			<h1>Facebook Likes Scoreboard</h1>
+		</div>
+		{{> realTime}}
+		
+		{{> leaderboard}}
+		{{> pageform}}
+</div>
+</body>
+
+<template name="realTime">
+<div style="float:right;margin-top:20px;">
+	{{#if realtimeEnabled}}
+			Real time updates end in {{realTimeRemaining}} seconds.
+	{{else}}
+			<button class="btn btn-info jqRealTime">Real Time</button>
+			<button class="btn btn-info jqAddNew">Add Page</button>
+	{{/if}}
+		</div>
+</template>
+
+<template name="leaderboard">
+  <div class="leaderboard">
+  	<table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Business Name</th>
+            <th>Category</th>
+            <th>Likes</th>
+          </tr>
+        </thead>
+        <tbody>
+           {{#each pages}}
+      			{{> page}}
+    		{{/each}}
+        </tbody>
+      </table>
+  </div>
+</template>
+
+<template name="page">
+ <tr>
+            <td><a target="_blank" href="{{fburl}}">{{bizName}}</a></td>
+            <td>{{category}}</td>
+            <td>{{likes}}</td>
+          </tr>
+	</template>
+
+<template name="message">
+ {{#if status}}
+ {{#if success}}
+	 <div class="alert-message success">
+    <p><strong>Congrats!</strong> Your page has been added to the scoreboard.</p>
+  </div>
+	{{else}}
+	<div class="alert-message danger">
+    <p>{{errorMsg}}</p>
+  </div>
+  {{/if}}
+	{{/if}}
+</template>
+
+<template name="pageform">
+
+<div class="modal fade jqAddNewModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add a new Facebook page</h4>
+        {{> message}}
+      </div>
+      <div class="modal-body">
+        
+  <form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend></legend>
+
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label">Business Name</label>
+  <div class="controls">                     
+     <input id="biz-name" name="bizName" type="text" class="input-xlarge">
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="control-group">
+  <label class="control-label">Facebook URL</label>
+  <div class="controls">
+    <input id="fburl" name="fburl" type="text" placeholder="http://www.facebook.com/Coca-cola" class="input-xlarge">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label">Your Name</label>
+  <div class="controls">
+    <input id="creator-name" name="creatorName" type="text" class="input-xlarge">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label">Your E-Mail</label>
+  <div class="controls">
+    <input id="creator-email" name="creatorEmail" type="text" class="input-xlarge">
+    
+  </div>
+</div>
+
+
+
+</fieldset>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button"  name="addpage" id="addpage" class="btn btn-primary">Add Page</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+</template>
