@@ -15,7 +15,7 @@
 
 
   fbscore.helpers.getFacebookGraphData = function(fburl, callback) {
-    var graphUrl = "http://graph.facebook.com/" + extractFacebookPageName(fburl);
+    var graphUrl = "http://graph.facebook.com/" + this.extractFacebookPageName(fburl);
     HTTP.call("GET", graphUrl, callback);
   }
   global["fbscore"] = fbscore;

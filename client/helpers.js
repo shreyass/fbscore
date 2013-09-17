@@ -8,6 +8,7 @@
     $("#fburl").val("");
     $("#creator-name").val("");
     $("#creator-email").val("");
+    Session.set("status",undefined);
     return false;
   }
 
@@ -30,7 +31,7 @@
         "errorMsg": "All fields are mandatory"
       });
     } else {
-      if (!isValidFacebookUrl(pageObj.fburl)) {
+      if (!fbscore.helpers.isValidFacebookUrl(pageObj.fburl)) {
         pageValid = false;
         Session.set("status", {
           "success": false,

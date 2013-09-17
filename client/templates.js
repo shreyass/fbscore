@@ -34,6 +34,8 @@ Template.leaderboard.pages = function() {
 }
 
 
+
+
 Template.message.helpers({
   status: function() {
     return Session.get("status");

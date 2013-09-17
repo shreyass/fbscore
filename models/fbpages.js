@@ -4,7 +4,7 @@
 	var FacebookPages = new Meteor.Collection("fbpage");
 
 	fbscore.updatePageLikeCount = function(fbPage) {
-		getFacebookGraphData(fbPage.fburl, function(error, resp) {
+		fbscore.helpers.getFacebookGraphData(fbPage.fburl, function(error, resp) {
 			if (!error && resp.data) {
 				FacebookPages.update(fbPage._id, {
 					$set: {
@@ -19,11 +19,10 @@
 		var hour = (new Date()).getHours();
 		FacebookPages.find({
 			"updateHour": hour
-		}).forEach(updatePageLikeCount);
+		}).forEach(this.updatePageLikeCount);
 	}
 
 	fbscore.getAll = function() {
-		debugger;
 		return FacebookPages.find({}, {
 			sort: {
 				likes: -1,
@@ -34,7 +33,7 @@
 	}
 
 	fbscore.fetchLikesAndInsertPage = function(pageObj) {
-		var graphUrl = "http://graph.facebook.com/" + extractFacebookPageName(pageObj.fburl);
+		var graphUrl = "http://graph.facebook.com/" + this.helpers.extractFacebookPageName(pageObj.fburl);
 		HTTP.call("GET", graphUrl, function(error, resp) {
 			if (!error && resp.data) {
 				pageObj.likes = resp.data.likes;
@@ -44,7 +43,9 @@
 					Session.set("status", {
 						"success": true
 					});
-					return clearForm();
+					 $(".jqAddNewModal").modal("hide");
+
+					return fbscore.helpers.clearForm();
 				} else {
 					Session.set("status", {
 						"success": false,
